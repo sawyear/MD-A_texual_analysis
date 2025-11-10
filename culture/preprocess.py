@@ -1,4 +1,5 @@
 from stanfordnlp.server import CoreNLPClient
+#from stanza.server import CoreNLPClient
 import os
 import re
 import functools
@@ -24,18 +25,18 @@ class preprocessor(object):
             Example:
                 Input: "When I was a child in Ohio, I always wanted to go to Stanford University with respect to higher education.
                 But I had to go along with my parents."
-                Output: 
-                
-                'when I be a child in ['when I be a child in [NER:LOCATION]Ohio , I always want to go to [NER:ORGANIZATION]Stanford_University with_respect_to higher education . 
+                Output:
+
+                'when I be a child in ['when I be a child in [NER:LOCATION]Ohio , I always want to go to [NER:ORGANIZATION]Stanford_University with_respect_to higher education .
                 'but I have to go_along with my parent . '
 
                 doc1_1
                 doc1_2
-        
+
         Note:
             When the doc is empty, both doc_id and sentences processed will be too. (@TODO: fix for consistensy)
         """
-        doc_ann = self.client.annotate(doc)
+        doc_ann = self.client.annotate(doc, properties_key='chinese')
         sentences_processed = []
         doc_ids = []
         for i, sentence in enumerate(doc_ann.sentence):
@@ -55,7 +56,7 @@ class preprocessor(object):
             dep_types {[str]} -- a list of MWEs in Universal Dependencies v1
             (default: s{set(["mwe", "compound", "compound:prt"])})
             see: http://universaldependencies.org/docsv1/u/dep/compound.html
-            and http://universaldependencies.org/docsv1/u/dep/mwe.html 
+            and http://universaldependencies.org/docsv1/u/dep/mwe.html
         Returns:
             A list of edges: e.g. [(1, 2), (4, 5)]
         """
@@ -168,12 +169,12 @@ class text_cleaner(object):
 
     def remove_NER(self, line):
         """Remove the named entity and only leave the tag
-        
+
         Arguments:
             line {str} -- text processed by the preprocessor
-        
+
         Returns:
-            str -- text with NE replaced by NE tags, 
+            str -- text with NE replaced by NE tags,
             e.g. [NER:PERCENT]16_% becomes [NER:PERCENT]
         """
         NERs = re.compile("(\[NER:\w+\])(\S+)")
@@ -185,17 +186,15 @@ class text_cleaner(object):
 
         Arguments:
             line {str} -- text processed by the preprocessor
-        
+
         Returns:
             str -- text with stopwords, numerics, 1-letter words removed
         """
         tokens = line.strip().lower().split(" ")
         tokens = [re.sub("\[pos:.*?\]", "", t) for t in tokens]
         # these are tagged bracket and parenthesises
-        puncts_stops = (
-            set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"])
-            | global_options.STOPWORDS
-        )
+        #puncts_stops = (set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"]) | global_options.STOPWORDS)
+        puncts_stops = set(["，", "。", "“", "”", "‘", "’"]) | global_options.STOPWORDS
         # filter out numerics and 1-letter words as recommend by
         # https://sraf.nd.edu/textual-analysis/resources/#StopWords
         tokens = filter(
@@ -207,7 +206,7 @@ class text_cleaner(object):
         return " ".join(tokens)
 
     def clean(self, line, id):
-        """Main function that chains all filters together and applies to a string. 
+        """Main function that chains all filters together and applies to a string.
         """
         return (
             functools.reduce(
@@ -225,10 +224,11 @@ if __name__ == "__main__":
         properties={
             "ner.applyFineGrained": "false",
             "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",
+            'tokenize.language': 'zh',
         },
         memory=global_options.RAM_CORENLP,
         threads=1,
     ) as client:
-        doc = "When I was a child in Ohio, I always wanted to go to Stanford University with respect to higher education. But I went along with my parents."
+        doc = "据悉，针对联邦学生贷款的借款人，有几种不同类型的以收入为导向的还款计划，这些计划根据借款人的收入和家庭规模规划还款。政府会衡量借款人还贷能力而给予贷款减免措施。"
         EC_preprocessor = preprocessor(client)
         print(EC_preprocessor.process_document(doc))

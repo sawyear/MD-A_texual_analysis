@@ -16,12 +16,12 @@ from . import file_util
 
 
 def train_bigram_model(input_path, model_path):
-    """ Train a phrase model and save it to the disk. 
-    
+    """ Train a phrase model and save it to the disk.
+
     Arguments:
         input_path {str or Path} -- input corpus
         model_path {str or Path} -- where to save the trained phrase model?
-    
+
     Returns:
         gensim.models.phrases.Phrases -- the trained phrase model
     """
@@ -37,7 +37,7 @@ def train_bigram_model(input_path, model_path):
         min_count=global_options.PHRASE_MIN_COUNT,
         scoring="default",
         threshold=global_options.PHRASE_THRESHOLD,
-        common_terms=global_options.STOPWORDS,
+        connector_words=global_options.STOPWORDS,
     )
     bigram_model.save(str(model_path))
     return bigram_model
@@ -48,15 +48,15 @@ def bigram_transform(line, bigram_phraser):
     Note: Needs a phraser object or phrase model.
 
     Arguments:
-        line {str}: a line 
+        line {str}: a line
         return: a line with phrases joined using "_"
     """
     return " ".join(bigram_phraser[line.split()])
 
 
 def file_bigramer(input_path, output_path, model_path, threshold=None, scoring=None):
-    """ Transform an input text file into a file with 2-word phrases. 
-    Apply again to learn 3-word phrases. 
+    """ Transform an input text file into a file with 2-word phrases.
+    Apply again to learn 3-word phrases.
 
     Arguments:
         input_path {str}: Each line is a sentence
@@ -70,21 +70,21 @@ def file_bigramer(input_path, output_path, model_path, threshold=None, scoring=N
     if threshold is not None:
         bigram_model.threshold = threshold
     # bigram_phraser = models.phrases.Phraser(bigram_model)
-    with open(input_path, "r") as f:
+    with open(input_path, "r",  encoding="utf-8") as f:
         input_data = f.readlines()
     data_bigram = [bigram_transform(l, bigram_model) for l in tqdm.tqdm(input_data)]
-    with open(output_path, "w") as f:
+    with open(output_path, "w",  encoding="utf-8") as f:
         f.write("\n".join(data_bigram) + "\n")
     assert len(input_data) == file_util.line_counter(output_path)
 
 
 def train_w2v_model(input_path, model_path, *args, **kwargs):
-    """ Train a word2vec model using the LineSentence file in input_path, 
+    """ Train a word2vec model using the LineSentence file in input_path,
     save the model to model_path.count
-    
+
     Arguments:
         input_path {str} -- Corpus for training, each line is a sentence
-        model_path {str} -- Where to save the model? 
+        model_path {str} -- Where to save the model?
     """
     Path(model_path).parent.mkdir(parents=True, exist_ok=True)
     corpus_confcall = gensim.models.word2vec.PathLineSentences(

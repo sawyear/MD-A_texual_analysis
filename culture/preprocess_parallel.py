@@ -19,19 +19,19 @@ def process_document(doc, doc_id=None):
         Example:
             Input: "When I was a child in Ohio, I always wanted to go to Stanford University with respect to higher education.
             But I had to go along with my parents."
-            Output: 
-            
-            'when I be a child in ['when I be a child in [NER:LOCATION]Ohio , I always want to go to [NER:ORGANIZATION]Stanford_University with_respect_to higher education . 
+            Output:
+
+            'when I be a child in ['when I be a child in [NER:LOCATION]Ohio , I always want to go to [NER:ORGANIZATION]Stanford_University with_respect_to higher education .
             'but I have to go_along with my parent . '
 
             doc1_1
             doc1_2
-    
+
     Note:
         When the doc is empty, both doc_id and sentences processed will be too. (@TODO: fix for consistensy)
     """
     with CoreNLPClient(endpoint="http://localhost:9002", start_server=False, timeout=120000000) as client:
-        doc_ann = client.annotate(doc)
+        doc_ann = client.annotate(doc, properties_key='chinese')
     sentences_processed = []
     doc_sent_ids = []
     for i, sentence in enumerate(doc_ann.sentence):
@@ -52,7 +52,7 @@ def sentence_mwe_finder(
         dep_types {[str]} -- a list of MWEs in Universal Dependencies v1
         (default: s{set(["mwe", "compound", "compound:prt"])})
         see: http://universaldependencies.org/docsv1/u/dep/compound.html
-        and http://universaldependencies.org/docsv1/u/dep/mwe.html 
+        and http://universaldependencies.org/docsv1/u/dep/mwe.html
     Returns:
         A list of edges: e.g. [(1, 2), (4, 5)]
     """

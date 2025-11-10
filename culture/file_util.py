@@ -11,10 +11,10 @@ from tqdm import tqdm
 
 def line_counter(a_file):
     """Count the number of lines in a text file
-    
+
     Arguments:
         a_file {str or Path} -- input text file
-    
+
     Returns:
         int -- number of lines in the file
     """
@@ -26,10 +26,10 @@ def line_counter(a_file):
 
 def file_to_list(a_file):
     """Read a text file to a list, each line is an element
-    
+
     Arguments:
         a_file {str or path} -- path to the file
-    
+
     Returns:
         [str] -- list of lines in the input file, can be empty
     """
@@ -43,7 +43,7 @@ def file_to_list(a_file):
 def list_to_file(list, a_file, validate=True):
     """Write a list to a file, each element in a line
     The strings needs to have no line break "\n" or they will be removed
-    
+
     Keyword Arguments:
         validate {bool} -- check if number of lines in the file
             equals to the length of the list (default: {True})
@@ -58,18 +58,18 @@ def list_to_file(list, a_file, validate=True):
 
 def read_large_file(a_file, block_size=10000):
     """A generator to read text files into blocks
-    Usage: 
+    Usage:
     for block in read_large_file(filename):
         do_something(block)
-    
+
     Arguments:
         a_file {str or path} -- path to the file
-    
+
     Keyword Arguments:
         block_size {int} -- [number of lines in a block] (default: {10000})
     """
     block = []
-    with open(a_file) as file_handler:
+    with open(a_file, encoding="utf-8") as file_handler:
         for line in file_handler:
             block.append(line)
             if len(block) == block_size:
