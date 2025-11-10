@@ -16,19 +16,21 @@ from culture import culture_dictionary, file_util
 
 def construct_doc_level_corpus(sent_corpus_file, sent_id_file):
     """Construct document level corpus from sentence level corpus and write to disk.
-    Dump "corpus_doc_level.pickle" and "doc_ids.pickle" to Path(global_options.OUTPUT_FOLDER, "scores", "temp"). 
-    
+    Dump "corpus_doc_level.pickle" and "doc_ids.pickle" to Path(global_options.OUTPUT_FOLDER, "scores", "temp").
+
     Arguments:
         sent_corpus_file {str or Path} -- The sentence corpus after parsing and cleaning, each line is a sentence
         sent_id_file {str or Path} -- The sentence ID file, each line correspond to a line in the sent_co(docID_sentenceID)
-    
+
     Returns:
         [str], [str], int -- a tuple of a list of documents, a list of document IDs, and the number of documents
     """
     print("Constructing doc level corpus")
     # sentence level corpus
     sent_corpus = file_util.file_to_list(sent_corpus_file)
+    print(len(sent_corpus))
     sent_IDs = file_util.file_to_list(sent_id_file)
+    print(len(sent_IDs))
     assert len(sent_IDs) == len(sent_corpus)
     # doc id for each sentence
     doc_ids = [x.split("_")[0] for x in sent_IDs]
@@ -55,10 +57,10 @@ def construct_doc_level_corpus(sent_corpus_file, sent_id_file):
 
 def calculate_df(corpus):
     """Calcualte and dump a document-freq dict for all the words.
-    
+
     Arguments:
         corpus {[str]} -- a list of documents
-    
+
     Returns:
         {dict[str: int]} -- document freq for each word
     """
@@ -80,7 +82,7 @@ def calculate_df(corpus):
 
 def load_doc_level_corpus():
     """load the corpus constructed by construct_doc_level_corpus()
-    
+
     Returns:
         [str], [str], int -- a tuple of a list of documents, a list of document IDs, and the number of documents
     """
@@ -101,7 +103,7 @@ def load_doc_level_corpus():
 
 def score_tf(documents, doc_ids, expanded_dict):
     """
-    Score documents using term freq. 
+    Score documents using term freq.
     """
     print("Scoring using Term-freq (tf).")
     score = culture_dictionary.score_tf(
@@ -111,19 +113,19 @@ def score_tf(documents, doc_ids, expanded_dict):
         n_core=global_options.N_CORES,
     )
     score.to_csv(
-        Path(global_options.OUTPUT_FOLDER, "scores", "scores_TF.csv"), index=False
+        Path(global_options.OUTPUT_FOLDER, "scores", "scores_TF.csv"), index=False, encoding='utf-8-sig'
     )
 
 
 def score_tf_idf(documents, doc_ids, N_doc, method, expanded_dict, **kwargs):
     """Score documents using tf-idf and its variations
-    
+
     Arguments:
         documents {[str]} -- list of documents
         doc_ids {[str]} -- list of document IDs
         N_doc {int} -- number of documents
-        method {str} -- 
-            TFIDF: conventional tf-idf 
+        method {str} --
+            TFIDF: conventional tf-idf
             WFIDF: use wf-idf log(1+count) instead of tf in the numerator
             TFIDF/WFIDF+SIMWEIGHT: using additional word weights given by the word_weights dict
         expanded_dict {dict[str, set(str)]} -- expanded dictionary
@@ -156,7 +158,7 @@ def score_tf_idf(documents, doc_ids, N_doc, method, expanded_dict, **kwargs):
                     "scores_{}.csv".format(method),
                 )
             ),
-            index=False,
+            index=False, encoding='utf-8-sig'
         )
         # save word contributions
         pd.DataFrame.from_dict(contribution, orient="index").to_csv(
@@ -165,7 +167,8 @@ def score_tf_idf(documents, doc_ids, N_doc, method, expanded_dict, **kwargs):
                 "scores",
                 "word_contributions",
                 "word_contribution_{}.csv".format(method),
-            )
+            ),
+            encoding='utf-8-sig'
         )
 
 

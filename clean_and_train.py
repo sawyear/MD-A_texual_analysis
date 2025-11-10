@@ -15,7 +15,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 def clean_file(in_file, out_file):
     """clean the entire corpus (output from CoreNLP)
-    
+
     Arguments:
         in_file {str or Path} -- input corpus, each line is a sentence
         out_file {str or Path} -- output corpus
@@ -82,8 +82,8 @@ culture_models.train_w2v_model(
         global_options.DATA_FOLDER, "processed", "trigram", "documents.txt"
     ),
     model_path=Path(global_options.MODEL_FOLDER, "w2v", "w2v.mod"),
-    size=global_options.W2V_DIM,
+    vector_size=global_options.W2V_DIM,
     window=global_options.W2V_WINDOW,
     workers=global_options.N_CORES,
-    iter=global_options.W2V_ITER,
+    epochs=global_options.W2V_ITER,
 )

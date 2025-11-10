@@ -1,4 +1,5 @@
-"""Global options for analysis
+"""
+Global options for analysis
 """
 import os
 from pathlib import Path
@@ -7,19 +8,21 @@ from typing import Dict, List, Optional, Set
 # Hardware options
 N_CORES: int = 2  # max number of CPU cores to use
 RAM_CORENLP: str = "8G"  # max RAM allocated for parsing using CoreNLP; increase to speed up parsing
-PARSE_CHUNK_SIZE: int = 100 # number of lines in the input file to process uing CoreNLP at once. Increase on workstations with larger RAM (e.g. to 1000 if RAM is 64G)  
+PARSE_CHUNK_SIZE: int = 30 # number of lines in the input file to process uing CoreNLP at once. Increase on workstations with larger RAM (e.g. to 1000 if RAM is 64G)
 
 # Directory locations
 os.environ[
     "CORENLP_HOME"
-] = "/Users/mai/stanford-corenlp-full-2018-10-05/"  # location of the CoreNLP models; use / to seperate folders
+] = "D:/Stanford_CoreNLP/stanford-corenlp-4.5.4"  # location of the CoreNLP models; use / to seperate folders
+#D:/Stanford_CoreNLP/stanford-corenlp-4.5.4
+#C:/Users/Administrator/stanford-corenlp-full-2018-10-05
 DATA_FOLDER: str = "data/"
 MODEL_FOLDER: str = "models/" # will be created if does not exist
 OUTPUT_FOLDER: str = "outputs/" # will be created if does not exist; !!! WARNING: existing files will be removed !!!
 
 # Parsing and analysis options
 STOPWORDS: Set[str] = set(
-    Path("resources", "StopWords_Generic.txt").read_text().lower().split()
+    Path("resources", "StopWords_Generic.txt").read_text(encoding="utf-8").lower().split()
 )  # Set of stopwords from https://sraf.nd.edu/textual-analysis/resources/#StopWords
 PHRASE_THRESHOLD: int = 10  # threshold of the phraser module (smaller -> more phrases)
 PHRASE_MIN_COUNT: int = 10  # min number of times a bigram needs to appear in the corpus to be considered as a phrase
@@ -30,67 +33,10 @@ N_WORDS_DIM: int = 500  # max number of words in each dimension of the dictionar
 DICT_RESTRICT_VOCAB = None # change to a fraction number (e.g. 0.2) to restrict the dictionary vocab in the top 20% of most frequent vocab
 
 # Inputs for constructing the expanded dictionary
-DIMS: List[str] = ["integrity", "teamwork", "innovation", "respect", "quality"]
+DIMS: List[str] = ["供应链市场化"]
 SEED_WORDS: Dict[str, List[str]] = {
-    "integrity": [
-        "integrity",
-        "ethic",
-        "ethical",
-        "accountable",
-        "accountability",
-        "trust",
-        "honesty",
-        "honest",
-        "honestly",
-        "fairness",
-        "responsibility",
-        "responsible",
-        "transparency",
-        "transparent",
-    ],
-    "teamwork": [
-        "teamwork",
-        "collaboration",
-        "collaborate",
-        "collaborative",
-        "cooperation",
-        "cooperate",
-        "cooperative",
-    ],
-    "innovation": [
-        "innovation",
-        "innovate",
-        "innovative",
-        "creativity",
-        "creative",
-        "create",
-        "passion",
-        "passionate",
-        "efficiency",
-        "efficient",
-        "excellence",
-        "pride",
-    ],
-    "respect": [
-        "respectful",
-        "talent",
-        "talented",
-        "employee",
-        "dignity",
-        "empowerment",
-        "empower",
-    ],
-    "quality": [
-        "quality",
-        "customer",
-        "customer_commitment",
-        "dedication",
-        "dedicated",
-        "dedicate",
-        "customer_expectation",
-    ],
+    "供应链市场化": ["合同","契约", '条款', '履约', '违约', '法律', '约束', '保障' ,'纠纷', '解决', '采购', '供应链', '协同', '市场化', '选择']
 }
-
 
 # Create directories if not exist
 Path(DATA_FOLDER, "processed", "parsed").mkdir(parents=True, exist_ok=True)

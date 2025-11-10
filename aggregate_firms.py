@@ -34,5 +34,5 @@ for method in methods:
         ),
         index=False,
         float_format="%.4f",
+        encoding='utf-8-sig'
     )
-

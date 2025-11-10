@@ -8,12 +8,25 @@ import gensim
 from culture import culture_dictionary
 from pathlib import Path
 
+def load_w2v(w2v_path):
+    """
+    Load word2vec model
 
-model = gensim.models.Word2Vec.load(
-    str(Path(global_options.MODEL_FOLDER, "w2v", "w2v.mod"))
-)
+    Args:
+        w2v_path (str): path of word2vec model
 
-vocab_number = len(model.wv.vocab)
+    Returns:
+        model: word2vec model
+    """
+    print('Loading word2vec model...')
+    model = gensim.models.KeyedVectors.load(w2v_path)
+    return model
+
+model = gensim.models.KeyedVectors.load(str(Path(global_options.MODEL_FOLDER, "w2v", "w2v.mod")))
+#model = load_w2v(w2v_path = 'D:/Stanford_CoreNLP/wordsvec-mda-200-6/mda01-21.200.6.bin')
+#model = gensim.models.KeyedVectors.load_word2vec_format('D:/Stanford_CoreNLP/tencent_zh_d200_small.txt', binary=False)
+vocab_number = len(model.wv)
+
 print("Vocab size in the w2v model: {}".format(vocab_number))
 
 # expand dictionary
@@ -42,4 +55,3 @@ culture_dictionary.write_dict_to_csv(
     file_name=str(Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv")),
 )
 print("Dictionary saved at {}".format(str(Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv"))))
-
