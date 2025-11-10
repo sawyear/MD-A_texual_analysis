@@ -23,7 +23,7 @@ using Python 3.8–3.11 environments.
 
 | Component | Original (English) | Modified (Chinese) |
 |------------|--------------------|--------------------|
-| Tokenization | Stanford CoreNLP (English POS/NER) | **jieba** for segmentation, optional **pkuseg** / **THULAC** |
+| Tokenization | Stanford CoreNLP (English POS/NER) | Stanford CoreNLP (Chinese POS/NER), optional **pkuseg** / **THULAC** |
 | Stopwords | NLTK stopword list | Chinese stopword dictionary (`data/resources/StopWords_Generic.txt`) |
 | Named Entity Removal | CoreNLP NER | Optional filtering using **HanLP** or **pkusegNER** |
 | Phrase Detection | gensim Phrases (2–3 gram) | Retained; applied on tokenized Chinese words |
