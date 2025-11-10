@@ -40,7 +40,7 @@ using Python 3.8–3.11 environments.
 - Install required packages:
   ```bash
   pip install -r requirements.txt
-````
+ ```
 
 * Recommended additional libraries for Chinese NLP:
 
