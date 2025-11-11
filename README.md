@@ -51,7 +51,6 @@ and specify its path in `global_options.py`:
 ```python
 os.environ["CORENLP_HOME"] = "/your/path/stanford-corenlp-4.5.10/"
 ```
----
 
 ## 📁 Data Format
 
