@@ -42,24 +42,15 @@ using Python 3.8–3.11 environments.
   pip install -r requirements.txt
  ```
 
-* Recommended additional libraries for Chinese NLP:
-
-  ```bash
-  pip install jieba pkuseg hanlp
-  ```
-
-### Stanford CoreNLP (optional)
+### Stanford CoreNLP
 
 If you still wish to use **Stanford CoreNLP** (e.g., for dependency parsing or POS tagging in English–Chinese mixed texts),
-download [Stanford CoreNLP v3.9.2+](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip)
+download [Stanford CoreNLP v3.9.2+](https://nlp.stanford.edu/software/stanford-corenlp-4.5.10-models-chinese.jar)
 and specify its path in `global_options.py`:
 
 ```python
-os.environ["CORENLP_HOME"] = "/your/path/stanford-corenlp-full-2018-10-05/"
+os.environ["CORENLP_HOME"] = "/your/path/stanford-corenlp-4.5.10/"
 ```
-
-> ⚠️ Note: Chinese-specific tokenization **does not rely on CoreNLP**, but you can still use it if needed.
-
 ---
 
 ## 📁 Data Format
@@ -68,8 +59,8 @@ Example input files should be placed in `data/input/`:
 
 | File                        | Description                                                                                                     |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `documents.txt`             | Each line is a full document (e.g., one annual report, CSR report, or MD&A text). Must not contain line breaks. |
-| `document_ids.txt`          | Each line is a unique document ID (e.g., firm–year). No spaces or underscores `_`.                              |
+| `documents.txt`             | Each line is a full document (e.g., one annual report, CSR report, or MD&A text).  |
+| `document_ids.txt`          | Each line is a unique document ID (e.g., firm–year).                              |
 | `id2firms.csv` *(optional)* | CSV with columns: `document_id` (str), `firm_id` (str), `time` (int). Used for firm–time aggregation.           |
 
 ---
