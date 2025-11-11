@@ -12,10 +12,10 @@ This repository implements a **Chinese-adapted version** of the method proposed 
 The original implementation is designed for **English-language corporate texts** (e.g., earnings calls).  
 This repository extends the pipeline to support **Chinese textual data**, including Chinese annual reports, CSR reports, and management discussions.
 
-本项目基于上述论文方法进行了中文化改造，实现了从中文语料的预处理、分词、短语学习、到词向量建模与文化得分计算的完整流程。
+本项目基于上述论文方法进行了中文化改造，实现了从中文语料的预处理、分词、短语学习、到词向量建模与得分计算的完整流程。
 
 The modified pipeline has been tested on **Windows 10**, **Ubuntu 20.04**, and **macOS Sonoma**,  
-using Python 3.8–3.11 environments.
+using Python 3.8–3.12 environments.
 
 ---
 
@@ -45,7 +45,7 @@ using Python 3.8–3.11 environments.
 ### Stanford CoreNLP
 
 If you still wish to use **Stanford CoreNLP** (e.g., for dependency parsing or POS tagging in English–Chinese mixed texts),
-download [Stanford CoreNLP v3.9.2+](https://nlp.stanford.edu/software/stanford-corenlp-4.5.10-models-chinese.jar)
+download [Stanford CoreNLP v4.5.4+](https://nlp.stanford.edu/software/stanford-corenlp-4.5.10-models-chinese.jar)
 and specify its path in `global_options.py`:
 
 ```python
