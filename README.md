@@ -63,7 +63,6 @@ Example input files should be placed in `data/input/`:
 | `document_ids.txt`          | Each line is a unique document ID (e.g., firm–year).                              |
 | `id2firms.csv` *(optional)* | CSV with columns: `document_id` (str), `firm_id` (str), `time` (int). Used for firm–time aggregation.           |
 
----
 
 ## ⚙️ Global Options
 
