@@ -42,7 +42,7 @@ using Python 3.8–3.12 environments.
   pip install -r requirements.txt
 ```
 
-## Stanford CoreNLP
+### Stanford CoreNLP
 
 If you still wish to use **Stanford CoreNLP** (e.g., for dependency parsing or POS tagging in English–Chinese mixed texts),
 download [Stanford CoreNLP v4.5.4+](https://nlp.stanford.edu/software/stanford-corenlp-4.5.10-models-chinese.jar)
