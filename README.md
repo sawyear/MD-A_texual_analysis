@@ -38,9 +38,9 @@ using Python 3.8–3.12 environments.
 
 - Python 3.8+
 - Install required packages:
-  ```bash
+```bash
   pip install -r requirements.txt
- ```
+```
 
 ## Stanford CoreNLP
 
