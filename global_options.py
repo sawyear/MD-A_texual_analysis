@@ -33,9 +33,9 @@ N_WORDS_DIM: int = 500  # max number of words in each dimension of the dictionar
 DICT_RESTRICT_VOCAB = None # change to a fraction number (e.g. 0.2) to restrict the dictionary vocab in the top 20% of most frequent vocab
 
 # Inputs for constructing the expanded dictionary
-DIMS: List[str] = ["供应链市场化"]
+DIMS: List[str] = ["绿色披露"]
 SEED_WORDS: Dict[str, List[str]] = {
-    "供应链市场化": ["合同","契约", '条款', '履约', '违约', '法律', '约束', '保障' ,'纠纷', '解决', '采购', '供应链', '协同', '市场化', '选择']
+    "绿色披露": ["环保", "绿色", "节能", "低碳", "循环经济", "可持续"]
 }
 
 # Create directories if not exist
