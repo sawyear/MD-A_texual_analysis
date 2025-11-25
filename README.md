@@ -82,7 +82,7 @@ Edit `global_options.py` to set:
 Run:
 
 ```bash
-python parse.py
+python parse.py (python jieba_tokenize.py）
 ```
 
 This step performs **Chinese word segmentation**, **optional NER removal**, and saves segmented results to:
@@ -203,7 +203,7 @@ And please mention the Chinese adaptation (this repository).
 ## 🧠 Example Workflow
 
 ```bash
-python parse.py
+python parse.py 
 python clean_and_train.py
 python create_dict.py
 python score.py
